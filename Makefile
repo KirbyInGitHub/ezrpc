@@ -6,8 +6,8 @@ kt_plugins=--plugin=./Plugin/protoc-gen-kotlin-grpc
 options=--swift_opt=Visibility=Public \
 --swift_opt=FileNaming=PathToUnderscores  \
 
-swift_out=--swift-grpc_out=./Sources/Example/EchoModel --swift_out=./Sources/Example/EchoModel
-kt_out=--kotlin-grpc_out=./Sources/Example/EchoModel
+swift_out=--swift-grpc_out=./Sources/Example/GRPCKit --swift_out=./Sources/Example/GRPCKit
+kt_out=--kotlin-grpc_out=./Sources/Example/GRPCKit
 
 default: build-swift
 
@@ -32,11 +32,10 @@ build-client:
 	cp .build/release/client ./Plugin
 
 gen:
-	./Plugin/protoc ./Sources/Example/EchoModel/common_public.proto --proto_path=./Sources/Example/ $(swift_plugins) $(options) $(swift_out)
-	./Plugin/protoc ./Sources/Example/EchoModel/address.proto --proto_path=./Sources/Example/ $(swift_plugins) $(options) $(swift_out)
+#	./Plugin/protoc ./Sources/Example/EchoModel/common_public.proto --proto_path=./Sources/Example/ $(swift_plugins) $(options) $(swift_out)
+#	./Plugin/protoc ./Sources/Example/EchoModel/address.proto --proto_path=./Sources/Example/ $(swift_plugins) $(options) $(swift_out)
 
-#	./Plugin/protoc ./Sources/Example/EchoModel/payment.proto --proto_path=./Sources/Example/ $(swift_plugins) $(swift_out)
-#	./Plugin/protoc ./Sources/Example/EchoModel/cashdesk.proto --proto_path=./Sources/Example/ $(swift_plugins) $(swift_out)
+	./Plugin/protoc ./Sources/Example/protos/usermsgcenter/*.proto --proto_path=./Sources/Example/protos/ $(swift_plugins) $(options) $(swift_out)
 	
 genkt:
 

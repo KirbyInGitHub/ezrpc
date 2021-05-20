@@ -8,23 +8,7 @@ option java_package = "com.daigou.sg.rpc.message";
 
 option swift_prefix = "GE";
 
-import "EchoModel/common.proto";
-
-//message EchoReq {
-//    int32 int32Value = 1;
-//    int64 int64Value = 2;
-//    string stringValue = 3;
-//    repeated string stringValues = 4;
-//    double doubleValues = 5;
-//}
-//
-//message EchoResp {
-//    common.Empty empty = 1;
-//}
-//
-//service Echo {
-//    rpc Get(EchoReq) returns (EchoResp);
-//}
+import "usermsgcenter/common.proto";
 
 // from ReadyToShip.proto
 message TReadyToShipGroup {
