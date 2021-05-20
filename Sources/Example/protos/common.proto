@@ -1,0 +1,16 @@
+ syntax = "proto3";
+
+ package common;
+
+ option swift_prefix = "CO";
+ option java_package = "com.daigou.sg.rpc.common";
+
+ option java_outer_classname = "CommonClass";
+
+ message Empty {
+     string i = 1;
+ }
+
+ message Common {
+     string d = 1;
+ }

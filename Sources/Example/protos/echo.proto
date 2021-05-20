@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package usermsgcenter;
+
+option csharp_namespace = "Zen.DataAccess.CustomerMessage";
+option java_package = "com.daigou.sg.rpc.message";
+//option java_outer_classname = "Usermsgcenter";
+
+option swift_prefix = "GE";
+
+import "EchoModel/common.proto";
+
+//message EchoReq {
+//    int32 int32Value = 1;
+//    int64 int64Value = 2;
+//    string stringValue = 3;
+//    repeated string stringValues = 4;
+//    double doubleValues = 5;
+//}
+//
+//message EchoResp {
+//    common.Empty empty = 1;
+//}
+//
+//service Echo {
+//    rpc Get(EchoReq) returns (EchoResp);
+//}
+
+// from ReadyToShip.proto
+message TReadyToShipGroup {
+    int32 itemsCount = 1;
+    TServiceType serviceType = 2;
+    string warehouseCode = 3;
+    string shippingMethodCode = 4;
+    string shippingMethodName = 5;
+    repeated string itemsPics = 6;
+    string status = 7;
+    int32 freeStorageDays = 8;
+    int32 chargedStorageDays = 9;
+    double storageFee = 10;
+    int32 notArrivedItemCount = 11;
+    int64 shippingMethodId = 12;
+}
+
+// from Common.proto
+enum TServiceType {
+    TServiceTypeOther = 0;
+    TServiceTypeBuy4Me = 1;
+    TServiceTypeShip4Me = 2;
+    TServiceTypeEzbuy = 3;
+    TServiceTypePrime = 4;
+}
+
+enum TMessageType {
+    TMessageTypeNormal = 0;
+    TMessageTypeOrderPending = 1;
+    TMessageTypeOrderArrived = 2;
+    TMessageTypeParcelArrangeable = 3;
+    TMessageTypeEnquiry = 4;
+    TMessageTypeWeb = 5;
+    TMessageTypeParcelPending = 6;
+    TMessageTypeFirebaseCallback = 7;
+}
+
+message TMessage {
+    int32 id = 1;
+    string messageType = 2;
+    string message = 3;
+    bool isRead = 4;
+    int32 orderId = 5;
+    int32 packageId = 6;
+    string url = 7;
+    string updateDate = 8;
+    TMessageType type = 9;
+    TReadyToShipGroup readyToShipGroup = 10;
+    int64 newOrderId = 11;    // 新订单号
+    string subPackageNumber = 12; // 二级包裹号
+    string actionType = 13; //
+    PendingReplyDetail  detail  = 14;
+}
+
+message PendingReplyDetail {
+    int64 newOrderItemId = 1;
+    TServiceType ServiceType = 2;
+}
+
+
+message UserDeleteMessagesRequest {
+    repeated int32 messageIDs = 1;
+}
+
+message UserGetMessagesRequest {
+    int32 offset = 1;
+    int32 limit = 2;
+}
+
+message UserGetUnreadMessageCountRequest {
+}
+
+message UserSetAllMessagesReadRequest {
+}
+
+message UserSetMessageReadRequest {
+    int32 messageId = 1;
+}
+
+message UserSetMessagesReadRequest {
+    repeated int32 messageIDs = 1;
+}
+
+message UserDeleteMessagesResponse {
+    bool Result = 1;
+}
+
+message UserGetMessagesResponse {
+    repeated TMessage Result = 1;
+}
+
+message UserGetUnreadMessageCountResponse {
+    int32 Result = 1;
+}
+
+message UserSetAllMessagesReadResponse {
+    bool Result = 1;
+}
+
+message UserSetMessageReadResponse {
+}
+
+message UserSetMessagesReadResponse {
+}
+
+
+service CustomerMessage {
+    rpc UserDeleteMessages(UserDeleteMessagesRequest) returns (UserDeleteMessagesResponse);
+    rpc UserGetMessages(UserGetMessagesRequest) returns (UserGetMessagesResponse);
+    rpc UserGetUnreadMessageCount(UserGetUnreadMessageCountRequest) returns (UserGetUnreadMessageCountResponse);
+    rpc UserSetAllMessagesRead(UserSetAllMessagesReadRequest) returns (UserSetAllMessagesReadResponse);
+    rpc UserSetMessageRead(UserSetMessageReadRequest) returns (UserSetMessageReadResponse);
+    rpc UserSetMessagesRead(UserSetMessagesReadRequest) returns (UserSetMessagesReadResponse);
+    rpc Test(common.Common) returns (common.Empty);
+}
